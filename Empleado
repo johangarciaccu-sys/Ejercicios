@@ -1,0 +1,77 @@
+
+package ejercicioempresa;
+
+
+public class Empleado {
+    private final String nombreCompleto;  
+    private final String idEmpleado;      
+    private double salarioMensual;        
+    private String departamento;          
+
+    
+    public Empleado(String nombreCompleto, String idEmpleado, double salarioMensual, String departamento) {
+        this.nombreCompleto = nombreCompleto;
+        this.idEmpleado = idEmpleado;
+
+        if (salarioMensual < 0) {
+            System.out.println("Error: El salario no puede ser negativo. Se asigna 0.0");
+            this.salarioMensual = 0.0;
+        } else {
+            this.salarioMensual = salarioMensual;
+        }
+
+        this.departamento = departamento;
+    }
+
+    
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    public String getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public double getSalarioMensual() {
+        return salarioMensual;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+   
+    public void setSalarioMensual(double salarioMensual) {
+        if (salarioMensual < 0) {
+            System.out.println("Error: El salario no puede ser negativo. No se actualiza.");
+        } else {
+            this.salarioMensual = salarioMensual;
+        }
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+   
+    public void mostrarInformacion() {
+        System.out.println("Informacion del Empleado");
+        System.out.println("Nombre Completo: " + getNombreCompleto());
+        System.out.println("ID Empleado: " + getIdEmpleado());
+        System.out.println("Salario Mensual: $" + getSalarioMensual());
+        System.out.println("Departamento: " + getDepartamento());
+    }
+
+    
+    public double calcularSalarioAnual() {
+        return getSalarioMensual() * 12;
+    }
+}
+    
+
+        
+        
+   
+    
+
+

@@ -1,0 +1,25 @@
+
+package ejercicioempresa;
+
+
+public class Main {
+    
+    public static void main(String[] args) {
+        Empleado emp1 = new Empleado("Johan Garcia", "EMP001", 250000, "Sistemas");
+
+        emp1.mostrarInformacion();
+
+        System.out.println("Salario Anual: $" + emp1.calcularSalarioAnual());
+
+       
+        emp1.setSalarioMensual(3000);
+        System.out.println("\nDespues de actualizar salario:");
+        emp1.mostrarInformacion();
+        System.out.println("Nuevo Salario Anual: $" + emp1.calcularSalarioAnual());
+
+       
+        emp1.setSalarioMensual(-500);
+    }
+}
+    
+
