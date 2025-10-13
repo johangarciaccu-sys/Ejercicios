@@ -1,0 +1,155 @@
+https://github.com/johangarciaccu-sys/Ejercicios.git
+
+src/
+ ├── app/
+ │    └── Main.java
+ ├── models/
+ │    ├── Producto.java
+ │    ├── Videojuego.java
+ │    └── Usuario.java
+ ├── services/
+ │    ├── Biblioteca.java
+ │    └── Tienda.java
+ ├── interfaces/
+ │    └── Comprable.java
+
+
+Interface: Comprable.java
+package interfaces;
+
+public interface Comprable {
+    double getPrecio();
+    String getNombre();
+}
+
+Clase abstracta: Producto.java
+package models;
+
+import interfaces.Comprable;
+
+public abstract class Producto implements Comprable {
+    private String nombre;
+    private double precio;
+
+    public Producto(String nombre, double precio) {
+        this.nombre = nombre;
+        this.precio = precio;
+    }
+
+    public String getNombre() { return nombre; }
+    public double getPrecio() { return precio; }
+
+    // Método abstracto que cada producto implementará
+    public abstract String getDescripcion();
+
+Clase Videojuego.java
+package models;
+
+public class Videojuego extends Producto {
+    private String genero;
+
+    public Videojuego(String nombre, String genero, double precio) {
+        super(nombre, precio);
+        this.genero = genero;
+    }
+
+    @Override
+    public String getDescripcion() {
+        return "Videojuego: " + getNombre() + " | Género: " + genero + " | Precio: $" + getPrecio();
+    }
+}
+
+Clase Usuario.java
+
+package models;
+
+public class Usuario {
+    private String nombre;
+    private String email;
+    private String password;
+
+    public Usuario(String nombre, String email, String password) {
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+    }
+
+    public String getNombre() { return nombre; }
+    public String getEmail() { return email; }
+}
+
+Clase Biblioteca.java (con arreglo)
+
+package services;
+
+import models.Videojuego;
+
+public class Biblioteca {
+    private Videojuego[] juegos;
+    private int contador;
+
+    public Biblioteca(int capacidad) {
+        juegos = new Videojuego[capacidad];
+        contador = 0;
+    }
+
+    public void agregarJuego(Videojuego juego) {
+        if (contador < juegos.length) {
+            juegos[contador] = juego;
+            contador++;
+            System.out.println("✅ Juego agregado: " + juego.getNombre());
+        } else {
+            System.out.println("⚠️ Biblioteca llena. No se puede agregar más.");
+        }
+    }
+
+    public void mostrarJuegos() {
+        System.out.println("\n📚 Juegos en la Biblioteca:");
+        for (int i = 0; i < contador; i++) {
+            System.out.println(" - " + juegos[i].getDescripcion());
+        }
+    }
+}
+
+Clase Tienda.java
+
+package services;
+
+import models.Usuario;
+import models.Videojuego;
+
+public class Tienda {
+    public void comprarJuego(Usuario usuario, Videojuego juego, Biblioteca biblioteca) {
+        System.out.println(usuario.getNombre() + " compró " + juego.getNombre() + " por $" + juego.getPrecio());
+        biblioteca.agregarJuego(juego);
+    }
+}
+
+Clase Main.java
+
+package app;
+
+import models.*;
+import services.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Usuario user = new Usuario("Carlos", "carlos@mail.com", "1234");
+
+        Videojuego juego1 = new Videojuego("Minecraft", "Sandbox", 25.0);
+        Videojuego juego2 = new Videojuego("GTA V", "Acción", 40.0);
+        Videojuego juego3 = new Videojuego("FIFA 24", "Deportes", 60.0);
+
+        Biblioteca biblioteca = new Biblioteca(5); // arreglo con capacidad de 5 juegos
+        Tienda tienda = new Tienda();
+
+        tienda.comprarJuego(user, juego1, biblioteca);
+        tienda.comprarJuego(user, juego2, biblioteca);
+        tienda.comprarJuego(user, juego3, biblioteca);
+
+        biblioteca.mostrarJuegos();
+    }
+}
+
+
+CODIGO CON ARREGLOS, CLASES ABSTRACTAS E INTERFACES DEL PROYECTO DE LA BIBLIOTECA DE JUEGOS VIRTUALES.
