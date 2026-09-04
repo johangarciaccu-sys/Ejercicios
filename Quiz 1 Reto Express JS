@@ -1,0 +1,96 @@
+const express = require('express');
+const app = express();
+
+app.use(express.json());
+
+const PORT = process.env.PORT || 3000;
+
+// CREAR BASE DE DATOS SIMULADA - TIENDA DE TECNOLOGÍA
+
+const productos = [
+  {
+    id: 301,
+    nombre: "Laptop Ryzen 5 5600G",
+    categoria: "Computadores",
+    marca: "Ryzen",
+    precio: 3500000,
+  },
+  {
+    id: 302,
+    nombre: "Mouse Logitech G203",
+    categoria: "Perifericos",
+    marca: "Logitech",
+    precio: 120000,
+  },
+  {
+    id: 303,
+    nombre: "Teclado mecanico Redragon K552",
+    categoria: "Perifericos",
+    marca: "Redragon",
+    precio: 150000,
+  },
+  {
+    id: 304,
+    nombre: "Audifonos HyperX",
+    categoria: "Audio",
+    marca: "HyperX",
+    precio: 250000,
+  },
+  {
+    id: 305,
+    nombre: "Monitor Samsung 24 pulgadas",
+    categoria: "Monitores",
+    marca: "Samsung",
+    precio: 400000,
+  }
+];
+
+// Endpoint 1: Verificación de estado del servidor
+app.get('/api/v1/status', (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    mensaje: "Servidor Backend QTecnologia ejecutándose correctamente",
+    timestamp: new Date()
+  });
+});
+
+// Endpoint 2: Obtener todos los productos
+app.get('/api/v1/productos', (req, res) => {
+  res.status(200).json({
+    success: true,
+    total: productos.length,
+    data: productos
+  });
+});
+
+// Endpoint 3: Detalle de un producto
+app.get('/api/v1/productos/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const producto = productos.find(p => p.id === id);
+
+  if (!producto) {
+    return res.status(404).json({
+      success: false,
+      mensaje: "Producto no encontrado"
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: producto
+  });
+});
+
+// Endpoint 4: ERROR 400
+app.get('/api/v1/error400', (req, res) => {
+  res.status(400).json({
+    success: false,
+    error: "Bad Request",
+    mensaje: "La solicitud enviada no es válida"
+  });
+});
+
+// Levantar el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor backend escuchando en el puerto ${PORT}`);
+});
